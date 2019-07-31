@@ -305,12 +305,12 @@ void dTensorTranspose( const int *perm, const int dim,
                  const int numThreads, const int useRowMajor = 0);
 
 void cTensorTranspose( const int *perm, const int dim,
-                 const float _Complex alpha, bool conjA, const float _Complex *A, const int *sizeA, const int *outerSizeA, 
-                 const float _Complex beta,                    float _Complex *B,                   const int *outerSizeB, 
+                 const COMPLEX_FLOAT alpha, bool conjA, const COMPLEX_FLOAT *A, const int *sizeA, const int *outerSizeA, 
+                 const COMPLEX_FLOAT beta,                    COMPLEX_FLOAT *B,                   const int *outerSizeB, 
                  const int numThreads, const int useRowMajor = 0);
 
 void zTensorTranspose( const int *perm, const int dim,
-                 const double _Complex alpha, bool conjA, const double _Complex *A, const int *sizeA, const int *outerSizeA, 
-                 const double _Complex beta,                    double _Complex *B,                   const int *outerSizeB, 
+                 const COMPLEX_DOUBLE alpha, bool conjA, const COMPLEX_DOUBLE *A, const int *sizeA, const int *outerSizeA, 
+                 const COMPLEX_DOUBLE beta,                    COMPLEX_DOUBLE *B,                   const int *outerSizeB, 
                  const int numThreads, const int useRowMajor = 0);
 }

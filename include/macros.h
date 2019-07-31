@@ -29,7 +29,12 @@
 #define INLINE __forceinline
 #elif defined(__GNUC__) || defined(__GNUG__)
 #define INLINE __attribute__((always_inline)) inline
+#elif defined(_MSC_VER)
+#define INLINE __forceinline
 #endif
+
+
+#define MAX_DIM 10
 
 #ifdef _OPENMP
 

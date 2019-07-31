@@ -752,10 +752,10 @@ void transpose_int_constStride1( const floatType* __restrict__ A, floatType* __r
 #ifdef _OPENMP
          omp_init_lock(&writelock);
 #endif
-         int tmpPerm[dim];
-         int tmpSizeA[dim];
-         int tmpOuterSizeA[dim];
-         int tmpOuterSizeB[dim];
+         int tmpPerm[MAX_DIM];
+         int tmpSizeA[MAX_DIM];
+         int tmpOuterSizeA[MAX_DIM];
+         int tmpOuterSizeB[MAX_DIM];
          accountForRowMajor(sizeA, outerSizeA, outerSizeB, perm, 
                tmpSizeA, tmpOuterSizeA, tmpOuterSizeB, tmpPerm, dim, useRowMajor); 
 
@@ -1726,7 +1726,7 @@ void Transpose<floatType>::getBestLoopOrder( std::vector<int> &loopOrder ) const
    }
 
    // create cost matrix; cost[i,idx] === cost for idx being at loop-level i
-   double costs[dim_*dim_];
+   double costs[MAX_DIM*MAX_DIM];
    for(int i=0;i < dim_ ; ++i){
       for(int idx=0;idx < dim_ ; ++idx){ //idx is at loop i
          double cost = 0;

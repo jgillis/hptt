@@ -25,6 +25,11 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "PGI")
   set(HPTT_CXX_FLAGS ${HPTT_CXX_FLAGS} -silent -w -Mnovect)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "XL")
   set(HPTT_CXX_FLAGS ${HPTT_CXX_FLAGS} -qsmp=omp)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  add_definitions(-D__restrict__=__restrict)
+  add_definitions(-DCOMPLEX_FLOAT=_Fcomplex)
+  add_definitions(-DCOMPLEX_DOUBLE=_Dcomplex)
+  add_definitions(-D_Pragma=__pragma)
 endif()
 
 if(ENABLE_AVX)
@@ -36,6 +41,7 @@ elseif(ENABLE_IBM)
 endif()
 
 set(HPTT_SRCS src/hptt.cpp src/plan.cpp src/transpose.cpp src/utils.cpp)
+
 
 add_library(hptt STATIC ${HPTT_SRCS})
 target_compile_features(hptt PUBLIC cxx_std_11)
