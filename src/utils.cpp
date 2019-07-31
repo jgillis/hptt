@@ -71,15 +71,3 @@ void accountForRowMajor(const int *sizeA, const int *outerSizeA, const int *oute
 
 }
 
-extern "C"
-void randomNumaAwareInit(float *data, const long *size, int dim)
-{
-   long totalSize = 1;
-   for(int i = 0; i < dim; i++)
-      totalSize *= size[i];
-#pragma omp parallel for
-   for(int i=0; i < totalSize; ++i)
-      data[i] = (i+1)%1000 - 500;
-
-
-}

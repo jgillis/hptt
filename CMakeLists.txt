@@ -26,10 +26,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "PGI")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "XL")
   set(HPTT_CXX_FLAGS ${HPTT_CXX_FLAGS} -qsmp=omp)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  add_definitions(-D__restrict__=__restrict)
-  add_definitions(-DCOMPLEX_FLOAT=_Fcomplex)
-  add_definitions(-DCOMPLEX_DOUBLE=_Dcomplex)
-  add_definitions(-D_Pragma=__pragma)
+  set(HPTT_CXX_FLAGS ${HPTT_CXX_FLAGS} /openmp)
 endif()
 
 if(ENABLE_AVX)
@@ -48,6 +45,14 @@ target_compile_features(hptt PUBLIC cxx_std_11)
 target_include_directories(hptt PUBLIC ${PROJECT_SOURCE_DIR}/include)
 #target_compile_definitions(hptt PRIVATE ${HPTT_CXX_COMPILE_DEFS})
 target_compile_options(hptt PUBLIC ${HPTT_CXX_FLAGS})
+set_property(TARGET hptt PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  target_compile_definitions(hptt PUBLIC -DCOMPLEX_FLOAT=_Fcomplex -DCOMPLEX_DOUBLE=_Dcomplex -D__restrict__=__restrict -D_Pragma=__pragma)
+else()
+  target_compile_definitions(hptt PUBLIC "-DCOMPLEX_FLOAT=float _Complex" "-DCOMPLEX_DOUBLE=double _Complex")
+endif()
+
 
 install(TARGETS hptt
         LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
